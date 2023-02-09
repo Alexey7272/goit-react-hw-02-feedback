@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import "./Feedback.module.css";
-import Section from "./Section";
-import FeedbackOptions from "./FeedbackOptions";
-import Statistics from "./Statistics";
-import Notification from "./Notification";
+import Section from "./Section/Section";
+import FeedbackOptions from "./FeedbackOptions/FeedbackOptions";
+import Statistics from "./Statistics/Statistics";
+import Notification from "./Notification/Notification";
 
 class Feedback extends Component {
 
@@ -22,24 +22,19 @@ class Feedback extends Component {
     };
 
     countTotalFeedback = () => {
-        let total = 0;
-        for (const key in this.state) {
-           total = total + this.state[key];
-        };
+        const values = Object.values(this.state)
+
+        const total = values.reduce((total, value) => {
+         return total + value;
+        }, 0);
+
         return total;
     };
 
     countPositiveFeedbackPercentage = () => {
-        let result;
-
-        if( this.countTotalFeedback() === 0) {
-            return result = 0;
-        } else {
-            result = Math.round(((this.state.good + this.state.neutral) / this.countTotalFeedback()) * 100);
-            return result;
-        };
+        const result = Math.round(((this.state.good + this.state.neutral) / this.countTotalFeedback()) * 100);
+        return result;
     };
-
 
     render () {
         const { good, neutral, bad } = this.state;
